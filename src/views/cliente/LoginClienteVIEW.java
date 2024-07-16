@@ -1,6 +1,7 @@
-package views;
+package views.cliente;
 
 import DAO.ClienteDAO;
+import views.MainVIEW;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +12,7 @@ public class LoginClienteVIEW extends JFrame {
 
     public LoginClienteVIEW () {
         setTitle("Login Cliente");
-        setSize(400, 300);
+        setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -26,6 +27,7 @@ public class LoginClienteVIEW extends JFrame {
         JPasswordField txtSenha = new JPasswordField();
         JButton btnLogin = new JButton("Login");
         JButton btnCadastro = new JButton("Cadastre-se");
+        JButton btnVoltar = new JButton("Voltar");
 
         // Definindo posição e tamanho dos componentes
         labelTopo.setBounds(130, 0, 125, 25);
@@ -35,6 +37,7 @@ public class LoginClienteVIEW extends JFrame {
         txtSenha.setBounds(100, 100, 200, 25);
         btnLogin.setBounds(130, 150, 125, 25);
         btnCadastro.setBounds(130, 200, 125, 25);
+        btnVoltar.setBounds(130, 250, 125, 25);
 
         // Adicionando no JFrame
         add(labelTopo);
@@ -44,6 +47,7 @@ public class LoginClienteVIEW extends JFrame {
         add(txtSenha);
         add(btnLogin);
         add(btnCadastro);
+        add(btnVoltar);
 
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -73,8 +77,8 @@ public class LoginClienteVIEW extends JFrame {
                     ClienteDAO clienteDao = new ClienteDAO();
                     boolean autenticado = clienteDao.autenticarCliente(email, senhaInt);
                     if (autenticado) {
-                        // Chamo outra tela
-                        JOptionPane.showMessageDialog(null, "Acesso permitido.");
+                        new OpcoesClienteVIEW();
+                        dispose();
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos.");
@@ -87,7 +91,23 @@ public class LoginClienteVIEW extends JFrame {
                     JOptionPane.showMessageDialog(null, "LoginClienteVIEW: "
                             + erro.getMessage());
                 }
-            } // Fim código
+            }
+        });
+
+        btnCadastro.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new CadastroClienteVIEW();
+                dispose();
+            }
+        });
+
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MainVIEW();
+                dispose();
+            }
         });
 
         setVisible(true);  // Mostrando a tela

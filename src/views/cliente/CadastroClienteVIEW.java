@@ -1,4 +1,4 @@
-package views;
+package views.cliente;
 
 import DAO.ClienteDAO;
 import entities.ClienteDTO;
@@ -7,13 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class CadastroClienteVIEW extends JFrame {
 
     public CadastroClienteVIEW() {
         setTitle("Cadastro de Cliente");
-        setSize(400, 350);
+        setSize(400, 380);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setLocationRelativeTo(null);
@@ -31,6 +30,7 @@ public class CadastroClienteVIEW extends JFrame {
         JTextField txtEmail = new JTextField();
         JPasswordField txtSenha = new JPasswordField();
         JButton btnCadastro = new JButton("Cadastro");
+        JButton btnVoltar = new JButton("Voltar");
 
         // Posição e tamanho dos componentes
         lblTopo.setBounds(100, 0, 180, 25);
@@ -43,6 +43,7 @@ public class CadastroClienteVIEW extends JFrame {
         txtEmail.setBounds(150, 150, 200, 25);
         txtSenha.setBounds(150, 200, 200, 25);
         btnCadastro.setBounds(140, 250, 100, 25);
+        btnVoltar.setBounds(140, 300, 100, 25);
 
         // Adicionando na tela
         add(lblTopo);
@@ -55,6 +56,7 @@ public class CadastroClienteVIEW extends JFrame {
         add(txtEmail);
         add(txtSenha);
         add(btnCadastro);
+        add(btnVoltar);
 
         // Action botão de cadastro
         btnCadastro.addActionListener(new ActionListener() {
@@ -96,11 +98,24 @@ public class CadastroClienteVIEW extends JFrame {
                     txtEmail.setText("");
                     txtSenha.setText("");
 
+                    // Voltando para a tela de login
+                    new LoginClienteVIEW();
+                    dispose();
+
                 } catch (Exception erro) {
                     JOptionPane.showMessageDialog(null, "CadastroClienteVIEW: " + erro.getMessage());
                 }
 
-            } // Fim do código
+            }
+        });
+
+        // Action botão voltar
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginClienteVIEW();
+                dispose();
+            }
         });
 
         setVisible(true);  // Mostrando o JFrame

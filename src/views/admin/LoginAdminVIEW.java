@@ -1,6 +1,7 @@
-package views;
+package views.admin;
 
 import DAO.AdministradorDAO;
+import views.MainVIEW;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,7 @@ public class LoginAdminVIEW extends JFrame {
         JTextField textUsuario = new JTextField();
         JPasswordField textSenha = new JPasswordField();
         JButton buttonLogin = new JButton("Login");
+        JButton buttonVoltar = new JButton("Voltar");
 
         // Definindo posições e tamanhos dos componentes
         labelTopo.setBounds(100, 0, 180, 25);
@@ -32,7 +34,8 @@ public class LoginAdminVIEW extends JFrame {
         labelSenha.setBounds(50, 100, 100, 25);
         textUsuario.setBounds(150, 50, 200, 25);
         textSenha.setBounds(150, 100, 200, 25);
-        buttonLogin.setBounds(150, 150, 100, 25);
+        buttonLogin.setBounds(140, 150, 100, 25);
+        buttonVoltar.setBounds(140, 200, 100, 25);
 
         // Adicionando os componentes ao JFrame
         add(labelTopo);
@@ -41,6 +44,7 @@ public class LoginAdminVIEW extends JFrame {
         add(textUsuario);
         add(textSenha);
         add(buttonLogin);
+        add(buttonVoltar);
 
         // Adicionando ação ao botão de login
         buttonLogin.addActionListener(new ActionListener() {
@@ -86,7 +90,15 @@ public class LoginAdminVIEW extends JFrame {
                     JOptionPane.showMessageDialog(null, "LoginAdminVIEW: " + erro.getMessage());
                 }
 
-            } // Fim código
+            }
+        });
+
+        buttonVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new MainVIEW();
+                dispose();
+            }
         });
 
         setVisible(true);

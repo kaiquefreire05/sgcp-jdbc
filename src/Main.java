@@ -1,13 +1,9 @@
-import views.CadastroClienteVIEW;
-import views.LoginAdminVIEW;
-import views.LoginClienteVIEW;
+import views.MainVIEW;
 
 public class Main {
     public static void main(String[] args) {
 
-        //new LoginClienteVIEW();
-        //new LoginAdminVIEW();
-        new CadastroClienteVIEW();
+        new MainVIEW();
 
     }
 }
