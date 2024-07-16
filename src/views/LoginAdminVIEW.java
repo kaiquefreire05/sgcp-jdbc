@@ -19,6 +19,7 @@ public class LoginAdminVIEW extends JFrame {
 
         // Estrutura
         JLabel labelTopo = new JLabel("Login de Administrador", SwingConstants.CENTER);
+        labelTopo.setFont(new Font("Arial", Font.BOLD, 16));
         JLabel labelUsuario = new JLabel("Usuário:");
         JLabel labelSenha = new JLabel("Senha:");
         JTextField textUsuario = new JTextField();
@@ -27,7 +28,6 @@ public class LoginAdminVIEW extends JFrame {
 
         // Definindo posições e tamanhos dos componentes
         labelTopo.setBounds(100, 0, 180, 25);
-        labelTopo.setFont(new Font("Arial", Font.BOLD, 16));
         labelUsuario.setBounds(50, 50, 100, 25);
         labelSenha.setBounds(50, 100, 100, 25);
         textUsuario.setBounds(150, 50, 200, 25);

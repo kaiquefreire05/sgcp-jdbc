@@ -6,7 +6,6 @@ public class ClienteDTO {
 
     private String nome;
     private String sobreNome;
-    private String endereco;
     private String email;
     private Integer senha;
 
@@ -14,10 +13,9 @@ public class ClienteDTO {
 
     public ClienteDTO(){};
 
-    public ClienteDTO(String nome, String sobreNome, String endereco, String email, Integer senha){
+    public ClienteDTO(String nome, String sobreNome, String email, Integer senha){
         this.nome = nome;
         this.sobreNome = sobreNome;
-        this.endereco = endereco;
         this.email = email;
         this.senha = senha;
     }
@@ -41,14 +39,6 @@ public class ClienteDTO {
         this.sobreNome = sobreNome;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -66,16 +56,13 @@ public class ClienteDTO {
     }
 
     // toString
-
     @Override
     public String toString() {
         return "ClienteDTO{" +
                 "nome='" + nome + '\'' +
                 ", sobreNome='" + sobreNome + '\'' +
-                ", endereco='" + endereco + '\'' +
                 ", email='" + email + '\'' +
                 ", senha=" + senha +
                 '}';
     }
-
 }
