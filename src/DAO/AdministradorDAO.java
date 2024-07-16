@@ -10,7 +10,7 @@ import java.sql.SQLException;
 
 public class AdministradorDAO {
 
-    public boolean autenticarUsuario(String username, String password) {
+    public boolean autenticarUsuario(String username, int password) {
 
         Connection conn = null;
 
@@ -24,16 +24,16 @@ public class AdministradorDAO {
             // Preparar a consulta
             PreparedStatement pst = conn.prepareStatement(sql);
             pst.setString(1, username);
-            pst.setString(2, password);
+            pst.setInt(2, password);
 
             // Executar a consulta
             ResultSet rs = pst.executeQuery();
 
-            return rs.next();
+            return rs.next(); // True or False
 
         } catch (SQLException e) {
 
-            JOptionPane.showMessageDialog(null, "UsuarioDAO: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "AdministradorDAO: " + e.getMessage());
             return false;
 
         }

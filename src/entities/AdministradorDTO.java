@@ -56,7 +56,6 @@ public class AdministradorDTO {
 
     // ToString
 
-
     @Override
     public String toString() {
         return "UsuarioDTO{" +
