@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/orders-jdbc.iml" filepath="$PROJECT_DIR$/orders-jdbc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sgcb-jdbc.iml" filepath="$PROJECT_DIR$/sgcb-jdbc.iml" />
     </modules>
   </component>
 </project>
