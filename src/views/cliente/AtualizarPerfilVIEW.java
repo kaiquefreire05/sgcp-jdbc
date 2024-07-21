@@ -13,6 +13,7 @@ public class AtualizarPerfilVIEW extends JFrame {
     private JTextField txtNome;
     private JTextField txtSobrenome;
     private JTextField txtSenha;
+    private JButton btnVoltar;
     private int clienteId;  // Variável para armazenar o ID do cliente
 
     public AtualizarPerfilVIEW() {
@@ -29,18 +30,21 @@ public class AtualizarPerfilVIEW extends JFrame {
         JLabel lblEmail = new JLabel("Email:");
         txtEmail = new JTextField();
         JButton btnCarregar = new JButton("Carregar");
+        btnVoltar = new JButton("Voltar");
 
         // Localização e tamanho dos componentes
         lblTopo.setBounds(130, 0, 125, 25);
         lblEmail.setBounds(50, 50, 100, 25);
         txtEmail.setBounds(150, 50, 200, 25);
         btnCarregar.setBounds(130, 90, 125, 25);
+        btnVoltar.setBounds(130, 250, 125, 25);
 
         // Adicionando no JFrame
         add(lblTopo);
         add(lblEmail);
         add(txtEmail);
         add(btnCarregar);
+        add(btnVoltar);
 
         // Action Listener para Carregar
         btnCarregar.addActionListener(new ActionListener() {
@@ -59,6 +63,7 @@ public class AtualizarPerfilVIEW extends JFrame {
                     if (campos != null){
                         clienteId = (int) campos[0];
                         remove(btnCarregar);
+                        remove(btnVoltar);
                         criarCampos(campos);
                         adicionarBtnAtualizar();
                     }
@@ -68,9 +73,19 @@ public class AtualizarPerfilVIEW extends JFrame {
                 }
             }
         });
+
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new OpcoesClienteVIEW();
+                dispose();
+            }
+        });
+
         setVisible(true);
     }
 
+    // Função para adicionar os campos e preencher com as informações do pedido
     private void criarCampos(Object[] campos) {
 
          // Estrutura e atribuindo valores
@@ -103,17 +118,21 @@ public class AtualizarPerfilVIEW extends JFrame {
 
     }
 
+    // Função que adiciona o botão atualizar e também o botão voltar
     private void adicionarBtnAtualizar() {
         JButton btnAtualizar = new JButton("Atualizar");
-        btnAtualizar.setBounds(130, 250, 125, 25);
+        btnAtualizar.setBounds(130, 240, 125, 25);
+        btnVoltar.setBounds(130, 280, 125, 25);
         add(btnAtualizar);
+        add(btnVoltar);
 
         btnAtualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     ClienteDAO clienteDao = new ClienteDAO();
-                    // Verificacão de senha
+
+                    // Validação de senha
                     int senhaInt;
                     try {
                         senhaInt = Integer.parseInt(txtSenha.getText());
@@ -128,9 +147,12 @@ public class AtualizarPerfilVIEW extends JFrame {
                             txtEmail.getText(),
                             senhaInt
                     );
-                    boolean sucess = clienteDao.atualizarCliente(clienteId, cliente);
-                    if (sucess) {
+                    boolean success = clienteDao.atualizarCliente(clienteId, cliente);
+                    if (success) {
                         JOptionPane.showMessageDialog(null, "Perfil atualizado com sucesso.");
+                        new OpcoesClienteVIEW();
+                        dispose();
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Erro ao atualizar o perfil.");
                     }
@@ -142,9 +164,5 @@ public class AtualizarPerfilVIEW extends JFrame {
         });
         revalidate();
         repaint();
-    }
-
-    public static void main(String[] args) {
-        new AtualizarPerfilVIEW();
     }
 }

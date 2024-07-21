@@ -77,8 +77,9 @@ public class LoginAdminVIEW extends JFrame {
                     boolean autenticado = adminDao.autenticarUsuario(user, senhaInt);
                     if (autenticado) {
 
-                        // Chamo outra tela
                         JOptionPane.showMessageDialog(null, "Acesso permitido");
+                        new OpcoesAdminVIEW();
+                        dispose();
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Usuário ou senha inválido.");

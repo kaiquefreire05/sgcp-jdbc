@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class ClienteDAO {
+public class ClienteDAO extends BaseDTO{
 
     public boolean autenticarCliente(String email, int senha){
         Connection conn = null;
@@ -159,38 +159,6 @@ public class ClienteDAO {
             DB.closeStatement(ps);
             DB.closeConnection();
         }
-    }
-
-    public ArrayList<ProdutoDTO> visualizarTodosProdutos() {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        ArrayList<ProdutoDTO> produtos = new ArrayList<>();
-        try {
-
-            conn = DB.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM produtos ORDER BY nome_produto");
-            rs = ps.executeQuery();
-
-            // Armazenando todos os produtos na lista
-            while (rs.next()) {
-                ProdutoDTO produto = new ProdutoDTO();
-                produto.setIdProduto(rs.getInt("id_produto"));
-                produto.setNomeProduto(rs.getString("nome_produto"));
-                produto.setDescProduto(rs.getString("desc_produto"));
-                produto.setPrecoProduto(rs.getBigDecimal("preco_produto"));
-                produto.setEstoqueProduto(rs.getInt("estoque_produto"));
-                produtos.add(produto);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "ClienteDAO: " + e.getMessage());
-
-        } finally {
-            DB.closeStatement(ps);
-            DB.closeResultSet(rs);
-        }
-        return produtos;
     }
 
 }
