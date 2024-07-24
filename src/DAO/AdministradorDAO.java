@@ -85,7 +85,8 @@ public class AdministradorDAO {
 
             // Verificando se o produto existe
             conn = DB.getConnection();
-            String verifyQuery = "SELECT 1 FROM produtos WHERE produto_id = ?";
+
+            String verifyQuery = "SELECT 1 FROM produtos WHERE id_produto = ?";
             st = conn.prepareStatement(verifyQuery);
             st.setInt(1, id);
             rs = st.executeQuery();
@@ -94,7 +95,7 @@ public class AdministradorDAO {
             if (rs.next()){
 
                 String updateQuery = "UPDATE produtos SET nome_produto = ?, desc_produto = ?, preco_produto = ?" +
-                    ", estoque_produto = ? WHERE produto_id = ?";
+                    ", estoque_produto = ? WHERE id_produto = ?";
                 st = conn.prepareStatement(updateQuery);
                 st.setString(1, nomeProd);
                 st.setString(2, descProd);
@@ -120,8 +121,24 @@ public class AdministradorDAO {
         } finally {
             DB.closeStatement(st);
             DB.closeResultSet(rs);
-            DB.closeConnection();
         }
+    }
 
+    public void excluirProduto(int id) {
+        String query = "DELETE FROM produtos WHERE id_produto = ?";
+        try (Connection conn = DB.getConnection()){
+
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1, id);
+
+            int linhasAfetadas = st.executeUpdate();
+            if (linhasAfetadas > 0)
+                JOptionPane.showMessageDialog(null, "Produto foi excluído.");
+            else
+                JOptionPane.showMessageDialog(null, "Produto não foi excluído.");
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "AdministradorDAO: " + e.getMessage());
+        }
     }
 }

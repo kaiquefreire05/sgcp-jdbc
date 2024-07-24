@@ -10,7 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.util.List;
 
 public class ClienteDAO extends BaseDTO{
 
@@ -160,5 +161,64 @@ public class ClienteDAO extends BaseDTO{
             DB.closeConnection();
         }
     }
+
+    public int criarPedidoComProdutos(int idCliente, Date dataPedido, List<ProdutoDTO> produtos) {
+    Connection conn = null;
+    PreparedStatement stPedido = null;
+    PreparedStatement stItem = null;
+    ResultSet rs = null;
+
+    try {
+        conn = DB.getConnection();
+        conn.setAutoCommit(false); // Começando a transação
+
+        // Inserindo na tabela de pedidos
+        String queryPedido = "INSERT INTO pedidos (id_cliente, data_pedido) VALUES (?, ?)";
+        stPedido = conn.prepareStatement(queryPedido, PreparedStatement.RETURN_GENERATED_KEYS);
+        stPedido.setInt(1, idCliente);
+        stPedido.setDate(2, dataPedido);
+        stPedido.executeUpdate();
+        rs = stPedido.getGeneratedKeys();
+
+        if (rs.next()) {
+            int pedidoId = rs.getInt(1);  // Obtendo o ID do pedido
+
+            // Insert into order_items table
+            String queryItem = "INSERT INTO produtos_pedido (id_pedido, id_produto, quantidade) VALUES (?, ?, ?)";
+            stItem = conn.prepareStatement(queryItem);
+            for (ProdutoDTO produto : produtos) {
+                stItem.setInt(1, pedidoId);
+                stItem.setInt(2, produto.getIdProduto());
+                stItem.setInt(3, produto.getEstoqueProduto());
+                stItem.addBatch();
+            }
+            stItem.executeBatch();
+
+            conn.commit(); // Dando commit na transação
+            return pedidoId;  // Retornando o ID do pedido
+
+        } else {
+            conn.rollback(); // Rollback transaction se tiver erro na criação do pedido
+            JOptionPane.showMessageDialog(null, "Erro ao criar o pedido.");
+            return -1;  // Return -1 para indicar falha
+        }
+
+    } catch (SQLException e) {
+        try {
+            if (conn != null) conn.rollback(); // Rollback transaction on error
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "ClienteDAO: " + ex.getMessage());
+        }
+
+        JOptionPane.showMessageDialog(null, "ClienteDAO: " + e.getMessage());
+        return -1;  // Return -1 para indicar falha
+
+    } finally {
+        DB.closeStatement(stPedido);
+        DB.closeStatement(stItem);
+        DB.closeConnection();
+    }
+}
 
 }

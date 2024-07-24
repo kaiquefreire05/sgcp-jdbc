@@ -1,7 +1,6 @@
 package views.admin;
 
 import DAO.AdministradorDAO;
-import entities.ProdutoDTO;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +11,7 @@ public class AdicionarProdutoVIEW extends JFrame {
 
     public AdicionarProdutoVIEW() {
         setTitle("Adicionar Produto");
-        setSize(400, 320);
+        setSize(400, 350);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -30,6 +29,7 @@ public class AdicionarProdutoVIEW extends JFrame {
         JTextField txtPreco = new JTextField();
         JTextField txtQtde = new JTextField();
         JButton btnCadastrar = new JButton("Cadastrar Produto");
+        JButton btnVoltar = new JButton("Voltar");
 
 
         // Tamanho e localização do componente
@@ -43,6 +43,7 @@ public class AdicionarProdutoVIEW extends JFrame {
         txtPreco.setBounds(150, 150, 200, 25);
         txtQtde.setBounds(150, 200, 200, 25);
         btnCadastrar.setBounds(90, 240, 200, 25);
+        btnVoltar.setBounds(90, 280, 200, 25);
 
         // Adicionando na JFrame
         add(lblTopo);
@@ -55,6 +56,7 @@ public class AdicionarProdutoVIEW extends JFrame {
         add(txtPreco);
         add(txtQtde);
         add(btnCadastrar);
+        add(btnVoltar);
 
         // Action Listener
         btnCadastrar.addActionListener(new ActionListener() {
@@ -94,8 +96,8 @@ public class AdicionarProdutoVIEW extends JFrame {
                     }
 
                     AdministradorDAO adminDao = new AdministradorDAO();
-                    boolean sucess = adminDao.inserirProduto(nomeProd, descProd, precoProdCheck, estoqueProdutoCheck);
-                    if (sucess){
+                    boolean success = adminDao.inserirProduto(nomeProd, descProd, precoProdCheck, estoqueProdutoCheck);
+                    if (success){
                         JOptionPane.showMessageDialog(null, "Produto registrado com sucesso.");
                         txtNomeProd.setText("");
                         txtDesc.setText("");
@@ -113,6 +115,14 @@ public class AdicionarProdutoVIEW extends JFrame {
                 } catch (Exception erro){
                     JOptionPane.showMessageDialog(null, "AdicionarProdutoVIEW: " + erro.getMessage());
                 }
+            }
+        });
+
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new OpcoesAdminVIEW();
+                dispose();
             }
         });
 
